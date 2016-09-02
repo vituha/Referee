@@ -17,8 +17,7 @@ namespace Walker
             catch (FileNotFoundException e)
             {
                 var message = $"Specified file does not exist: \"{e.FileName}\".";
-                Console.Error.WriteLine(message);
-                return CommandResult.Failed(ErrorCode.FileNotFound);
+                return CommandResult.Failed(ErrorCode.FileNotFound, message);
             }
             catch (Exception e)
             {
@@ -26,8 +25,7 @@ namespace Walker
                     "Unknown error occurred. " +
                     "Plase help us improve this program by submitting new issue with following text on GitHub: " +
                     $"\"{e}\".";
-                Console.Error.WriteLine(message);
-                return CommandResult.Failed(ErrorCode.UnknownError);
+                return CommandResult.Failed(ErrorCode.UnknownError, message);
             }
 
             return CommandResult.Successful();
@@ -43,8 +41,7 @@ namespace Walker
         {
             string programName = Path.GetFileName(Assembly.GetEntryAssembly().Location);
             var message = $"Illegal usage. Run {programName} /? to read help page.";
-            Console.Error.WriteLine(message);
-            return CommandResult.Failed(ErrorCode.IllegalUsage);
+            return CommandResult.Failed(ErrorCode.IllegalUsage, message);
         }
     }
 }

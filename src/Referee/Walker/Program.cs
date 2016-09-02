@@ -1,4 +1,6 @@
-﻿namespace Walker
+﻿using System;
+
+namespace Walker
 {
     class Program
     {
@@ -12,10 +14,15 @@
 
             CommandResult result = command.HandleWith(handler);
 
-            int returnCode =
-                result.IsSuccessful
-                    ? 0
-                    : (int)result.ErrorCode.Value;
+            int returnCode = 0;
+
+            result.Handle(
+                () => returnCode = 0,
+                (errorCode, errorMessage) =>
+                {
+                    Console.Error.WriteLine(errorMessage);
+                    returnCode = (int)errorCode;
+                });
 
             return returnCode;
         }

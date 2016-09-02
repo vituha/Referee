@@ -1,28 +1,39 @@
-﻿namespace Walker
+﻿using System;
+
+namespace Walker
 {
     sealed class CommandResult
     {
-        public bool IsSuccessful { get; private set; }
-        public ErrorCode? ErrorCode { get; private set; }
+        bool isSuccessful;
+        ErrorCode errorCode;
+        string errorMessage;
 
         public static CommandResult Successful()
         {
             return
                 new CommandResult
                 {
-                    IsSuccessful = true,
-                    ErrorCode = null,
+                    isSuccessful = true,
                 };
         }
 
-        public static CommandResult Failed(ErrorCode code)
+        public static CommandResult Failed(ErrorCode code, string message)
         {
             return
                 new CommandResult
                 {
-                    IsSuccessful = false,
-                    ErrorCode = code,
+                    isSuccessful = false,
+                    errorCode = code,
+                    errorMessage = message,
                 };
+        }
+
+        public void Handle(Action ifSuccessful, Action<ErrorCode, string> ifFailed)
+        {
+            if (isSuccessful)
+                ifSuccessful();
+            else
+                ifFailed(errorCode, errorMessage);
         }
     }
 }
