@@ -1,12 +1,15 @@
-﻿using System;
+﻿using QuickGraph;
+using System;
 
 namespace Walker
 {
     class ReferencesWalker
     {
-        public Graph Walk(string path)
+        public ArrayBidirectionalGraph<string, TaggedEdge<string, int>> Walk(string path)
         {
-            return new Graph();
+            return
+                new BidirectionalGraph<string, TaggedEdge<string, int>>()
+                    .ToArrayBidirectionalGraph();
         }
     }
 }
