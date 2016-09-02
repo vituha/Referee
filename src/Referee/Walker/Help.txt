@@ -1,0 +1,7 @@
+﻿Scans graph of assembly references in .NET application
+and outputs it in multiple formats.
+
+Usage: Walker.exe [<path>]
+
+  path - path to .NET application entry point
+
